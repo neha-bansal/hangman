@@ -16,8 +16,7 @@ public class DisplayConsole {
 	public char scanCharacter() {
 		System.out.print("Enter a character: ");
 		Scanner scanner = new Scanner(System.in);
-		char userEnteredCharacter = scanner.next().trim().charAt(0);
-		System.out.println(userEnteredCharacter);
+		char userEnteredCharacter = scanner.next().charAt(0);
 		scanner.close();
 		return userEnteredCharacter;
 	}

@@ -9,8 +9,6 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
-import com.hangman.example.utility.HangmanUtility;
-
 public class Game {
 	public static final char UNDERSCORE = '_';
 	private GameLevel gameLevel;
@@ -32,11 +30,11 @@ public class Game {
 		word = WordRepository.getInstance().guessWord(gameLevel);
 		remainingChances = gameLevel.getWrongGuessAllowed() + getHiddenCharCount();
 		hideCharacters();
-		while (isPatternCompleted() && remainingChances <= 0) {
+		while (!isPatternCompleted() && remainingChances > 0) {
 			displayConsole.displayInfo(enteredCharacters, pattern, remainingChances);
 			char userEnteredCharacter = displayConsole.scanCharacter();
+			enteredCharacters.add(userEnteredCharacter);
 			remainingChances--;
-			// printBorder();
 			if (checkCharacterValid(userEnteredCharacter)) {
 				updatePattern(userEnteredCharacter);
 			}
@@ -54,7 +52,7 @@ public class Game {
 	 * 
 	 * @return the updated word with hidden characters
 	 */
-	public String hideCharacters() {
+	public void hideCharacters() {
 		Random random = new Random();
 		Set<Integer> positionsToHideSet = new HashSet<>();
 		for (int i = 0; i < getHiddenCharCount(); i++) {
@@ -70,7 +68,6 @@ public class Game {
 		}
 		pattern = updatedWordBuilder.toString();
 		LOGGER.debug("Updated word after hiding the characters: " + pattern);
-		return updatedWordBuilder.toString();
 	}
 
 	/**

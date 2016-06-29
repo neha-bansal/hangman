@@ -48,7 +48,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>com.hangman.example.main.HangmanMain</mainClass>
+							<mainClass>com.hangman.demo.HangmanDemo</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

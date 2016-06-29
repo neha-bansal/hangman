@@ -1,4 +1,4 @@
-package com.hangman;
+package com.hangman.exception;
 
 public class NoWordFoundException extends RuntimeException {
 

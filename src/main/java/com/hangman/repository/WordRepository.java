@@ -1,4 +1,4 @@
-package com.hangman;
+package com.hangman.repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+
+import com.hangman.GameLevel;
+import com.hangman.exception.NoWordFoundException;
 
 public class WordRepository {
 

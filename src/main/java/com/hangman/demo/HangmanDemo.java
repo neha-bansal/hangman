@@ -1,4 +1,8 @@
-package com.hangman;
+package com.hangman.demo;
+
+import com.hangman.DisplayConsole;
+import com.hangman.Game;
+import com.hangman.GameLevel;
 
 public class HangmanDemo {
 

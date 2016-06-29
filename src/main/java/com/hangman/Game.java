@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.hangman.repository.WordRepository;
+
 public class Game {
 
 	private GameLevel gameLevel;

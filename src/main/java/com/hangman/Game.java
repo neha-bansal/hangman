@@ -17,7 +17,7 @@ public class Game {
 	private DisplayConsole displayConsole;
 	private int remainingChances;
 	private List<Character> enteredCharacters = new ArrayList<Character>();
-
+	private Puzzle puzzle;
 	private static final Logger LOGGER = Logger.getLogger(Game.class);
 
 	public Game(DisplayConsole displayConsole, GameLevel level) {
@@ -28,10 +28,14 @@ public class Game {
 	public void start() {
 		LOGGER.info("The Hangman Game Started...");
 		word = WordRepository.getInstance().guessWord(gameLevel);
-		remainingChances = gameLevel.getWrongGuessAllowed() + getHiddenCharCount();
+		puzzle = new Puzzle(word, gameLevel.getVisibleCharCount());
+		remainingChances = gameLevel.getWrongGuessAllowed()
+				+ getHiddenCharCount();
 		hideCharacters();
+		displayConsole.init();
 		while (!isPatternCompleted() && remainingChances > 0) {
-			displayConsole.displayInfo(enteredCharacters, pattern, remainingChances);
+			displayConsole.displayInfo(enteredCharacters, pattern,
+					remainingChances);
 			char userEnteredCharacter = displayConsole.scanCharacter();
 			enteredCharacters.add(userEnteredCharacter);
 			remainingChances--;
@@ -44,6 +48,7 @@ public class Game {
 		} else {
 			displayConsole.displayLossingMessage(word);
 		}
+		displayConsole.close();
 	}
 
 	/**
@@ -58,7 +63,8 @@ public class Game {
 		for (int i = 0; i < getHiddenCharCount(); i++) {
 			positionsToHideSet.add(random.nextInt(word.length()));
 		}
-		LOGGER.debug("Positions to hide in the selected word: " + positionsToHideSet);
+		LOGGER.debug("Positions to hide in the selected word: "
+				+ positionsToHideSet);
 		Iterator<Integer> iterator = positionsToHideSet.iterator();
 		StringBuilder updatedWordBuilder = new StringBuilder(word);
 

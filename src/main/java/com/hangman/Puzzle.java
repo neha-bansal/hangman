@@ -31,8 +31,10 @@ public class Puzzle {
 	public void hideCharacters() {
 		Random random = new Random();
 		Set<Integer> positionsToHideSet = new HashSet<>();
+		int noOfChars = word.length();
 		while (positionsToHideSet.size() < getHiddenCharCount()) {
-			positionsToHideSet.add(random.nextInt(word.length()));
+			int choosenIndex = random.nextInt(noOfChars);
+			positionsToHideSet.add(choosenIndex);
 		}
 		LOGGER.debug("Positions to hide in the selected word: "
 				+ positionsToHideSet);
@@ -46,9 +48,12 @@ public class Puzzle {
 		LOGGER.debug("Puzzle pattern: " + visiblePattern);
 	}
 
-	public void tryLetter(char letter) {
+	public boolean tryLetter(char letter) {
 		if (checkCharacterValid(letter)) {
 			updatePattern(letter);
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -74,7 +79,13 @@ public class Puzzle {
 	}
 
 	private boolean checkCharacterValid(char letter) {
-		return word.indexOf(letter) >= 0;
+		char[] charArray = visiblePattern.toCharArray();
+		for (int i = 0; i < charArray.length; i++) {
+			if (charArray[i] == UNDERSCORE && word.charAt(i) == letter) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public int getHiddenCharCount() {

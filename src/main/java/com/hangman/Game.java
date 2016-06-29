@@ -26,17 +26,18 @@ public class Game {
 		LOGGER.info("The Hangman Game Started...");
 		word = WordRepository.getInstance().guessWord(gameLevel);
 		puzzle = new Puzzle(word, gameLevel.getVisibleCharCount());
-		remainingChances = gameLevel.getWrongGuessAllowed()
-				+ puzzle.getHiddenCharCount();
+		remainingChances = gameLevel.getWrongGuessAllowed();
 		puzzle.prepare();
 		displayConsole.init();
 		while (!puzzle.isSolved() && remainingChances > 0) {
 			displayConsole.displayInfo(enteredCharacters,
 					puzzle.getVisiblePattern(), remainingChances);
 			char userEnteredCharacter = displayConsole.scanCharacter();
-			puzzle.tryLetter(userEnteredCharacter);
+			boolean valid = puzzle.tryLetter(userEnteredCharacter);
 			enteredCharacters.add(userEnteredCharacter);
-			remainingChances--;
+			if (!valid) {
+				remainingChances--;
+			}
 		}
 		if (puzzle.isSolved()) {
 			displayConsole.displayWinningMessage(word);

@@ -12,12 +12,12 @@ import org.apache.log4j.Logger;
 import com.hangman.example.utility.HangmanUtility;
 
 public class Game {
+	public static final char UNDERSCORE = '_';
 	private GameLevel gameLevel;
 	private String word;
 	private String pattern;
 	private DisplayConsole displayConsole;
 	private int remainingChances;
-	private WordRepository wordRep = WordRepository.getInstance();
 	private List<Character> enteredCharacters = new ArrayList<Character>();
 
 	private static final Logger LOGGER = Logger.getLogger(Game.class);
@@ -29,17 +29,17 @@ public class Game {
 
 	public void start() {
 		LOGGER.info("The Hangman Game Started...");
-		word = wordRep.guessWord(gameLevel);
+		word = WordRepository.getInstance().guessWord(gameLevel);
 		remainingChances = gameLevel.getWrongGuessAllowed() + getHiddenCharCount();
 		hideCharacters();
-		while (pattern.contains("_") && remainingChances != 0) {
+		while (isPatternCompleted() && remainingChances != 0) {
 			displayConsole.display(enteredCharacters, pattern, remainingChances);
-						char userEnteredCharacter = displayConsole.scanCharacter();
-//			printBorder();
+			char userEnteredCharacter = displayConsole.scanCharacter();
+			// printBorder();
 
 			boolean characterExist = HangmanUtility.checkCharacterValid(userEnteredCharacter);
 
-			if (characterExist) {
+			if (checkCharacterValid(userEnteredCharacter)) {
 				pattern = HangmanUtility.updateWord(userEnteredCharacter);
 			}
 		}
@@ -63,21 +63,43 @@ public class Game {
 
 		while (iterator.hasNext()) {
 			int characterPlace = iterator.next();
-			updatedWordBuilder.setCharAt(characterPlace, '_');
+			updatedWordBuilder.setCharAt(characterPlace, UNDERSCORE);
 		}
 		pattern = updatedWordBuilder.toString();
 		LOGGER.debug("Updated word after hiding the characters: " + pattern);
 		return updatedWordBuilder.toString();
 	}
+
 	/**
-	 * It checks that the character entered by the user is a valid character or not, i.e., it will be used in the updated word.
-	 * @param enteredCharacter the character entered by the user
+	 * It checks that the character entered by the user is a valid character or
+	 * not, i.e., it will be used in the updated word.
+	 * 
+	 * @param enteredCharacter
+	 *            the character entered by the user
 	 * @return whether entered character is valid or not.
 	 */
-	public static boolean checkCharacterValid(char enteredCharacter) {
-		return true;
+	public boolean checkCharacterValid(char enteredCharacter) {
+		return word.indexOf(enteredCharacter) >= 0;
 	}
+
 	public int getHiddenCharCount() {
 		return word.length() - gameLevel.getVisibleCharCount();
+	}
+
+	public void updatePattern(char enteredCharacter) {
+		StringBuilder w = new StringBuilder(word);
+		StringBuilder p = new StringBuilder(pattern);
+		int index = w.indexOf(String.valueOf(enteredCharacter));
+		while (!isPatternCompleted() && index >= 0) {
+			w.setCharAt(index, UNDERSCORE);
+			p.setCharAt(index, enteredCharacter);
+			index = w.indexOf(String.valueOf(enteredCharacter));
+		}
+		pattern = p.toString();
+		LOGGER.debug("Updated word after hiding the characters: " + pattern);
+	}
+
+	public boolean isPatternCompleted() {
+		return pattern.indexOf(UNDERSCORE) < 0;
 	}
 }

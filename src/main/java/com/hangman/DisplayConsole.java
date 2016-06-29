@@ -1,5 +1,6 @@
 package com.hangman;
 
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -7,7 +8,7 @@ import org.apache.log4j.Logger;
 public class DisplayConsole {
 	private static final Logger LOGGER = Logger.getLogger(DisplayConsole.class);
 
-	public void display(char[] guessedChars, String pattern, int chancesLeft) {
+	public void display(List<Character> guessedChars, String pattern, int chancesLeft) {
 		printBorder();
 		printGameInformation(pattern, chancesLeft, guessedChars);
 	}
@@ -45,9 +46,9 @@ public class DisplayConsole {
 		printStarBorder();
 	}
 
-	private void printGameInformation(String pattern, int remainingChances, char[] guessedChars) {
+	private void printGameInformation(String pattern, int remainingChances, List<Character> guessedChars) {
 		System.out.print("Chances remaining: " + remainingChances + ", ");
-		System.out.println("Characters used: " + new String(guessedChars));
+		System.out.println("Characters used: " + guessedChars);
 		System.out.println();
 		System.out.println("Guess the word:  " + pattern);
 		System.out.println();

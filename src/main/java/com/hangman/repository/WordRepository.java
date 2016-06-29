@@ -16,7 +16,7 @@ public class WordRepository {
 	private static final Logger LOGGER = Logger.getLogger(WordRepository.class);
 
 	private List<String> wordsList = Arrays.asList(new String[] { "january", "fuzzy", "adventure", "holiday", "quizzing", "puzzling", "jeopardizing", "lexicalizing", "technical", "wednesday",
-			"interaction", "ireland", "hangman", "gliders", "scientific", "remote" });
+			"interaction", "ireland", "hangman", "gliders", "scientific", "remote", "fly", "hard" });
 
 	private Map<Integer, List<String>> wordsMap = new HashMap<Integer, List<String>>();
 
@@ -53,13 +53,8 @@ public class WordRepository {
 		return INSTANCE;
 	}
 
-	private int guessNumber(int min, int max) {
+	int guessNumber(int min, int max) {
 		return (int) (Math.random() * ((max - min) + 1) + min);
-	}
-
-	public static void main(String[] args) {
-		System.err.println(new WordRepository().guessNumber(5, 7));
-		;
 	}
 
 }

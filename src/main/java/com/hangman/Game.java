@@ -10,30 +10,30 @@ import com.hangman.repository.WordRepository;
 public class Game {
 
 	private GameLevel gameLevel;
-	private String word;
 	private DisplayConsole displayConsole;
 	private int remainingChances;
-	private List<Character> enteredCharacters = new ArrayList<Character>();
+	private List<Character> enteredCharacters;
 	private Puzzle puzzle;
 	private static final Logger LOGGER = Logger.getLogger(Game.class);
 
 	public Game(DisplayConsole displayConsole, GameLevel level) {
 		this.displayConsole = displayConsole;
 		this.gameLevel = level;
+		this.enteredCharacters = new ArrayList<Character>();
 	}
 
 	public void start() {
 		LOGGER.info("The Hangman Game Started...");
-		word = WordRepository.getInstance().guessWord(gameLevel);
+		displayConsole.init();
+		displayConsole.displayBanner();
+		String word = WordRepository.getInstance().guessWord(gameLevel);
 		puzzle = new Puzzle(word, gameLevel.getVisibleCharCount());
 		remainingChances = gameLevel.getWrongGuessAllowed();
-		puzzle.prepare();
-		displayConsole.init();
+		puzzle.initializePattern();
 		while (!puzzle.isSolved() && remainingChances > 0) {
-			displayConsole.displayInfo(enteredCharacters,
-					puzzle.getVisiblePattern(), remainingChances);
+			displayConsole.displayGameInfo(gameLevel, enteredCharacters, puzzle.getVisiblePattern(), remainingChances);
 			char userEnteredCharacter = displayConsole.scanCharacter();
-			boolean valid = puzzle.tryLetter(userEnteredCharacter);
+			boolean valid = puzzle.tryWithCharacter(userEnteredCharacter);
 			enteredCharacters.add(userEnteredCharacter);
 			if (!valid) {
 				remainingChances--;
@@ -42,7 +42,7 @@ public class Game {
 		if (puzzle.isSolved()) {
 			displayConsole.displayWinningMessage(word);
 		} else {
-			displayConsole.displayLossingMessage(word);
+			displayConsole.displayLosingMessage(word);
 		}
 		displayConsole.close();
 	}

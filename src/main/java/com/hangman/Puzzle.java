@@ -19,16 +19,7 @@ public class Puzzle {
 		this.visibleCharCount = visibleCharCount;
 	}
 
-	public void prepare() {
-		hideCharacters();
-	}
-
-	/**
-	 * Hides the characters in the selected word depending on the value of
-	 * characterToHide.
-	 * 
-	 */
-	public void hideCharacters() {
+	public void initializePattern() {
 		Random random = new Random();
 		Set<Integer> positionsToHideSet = new HashSet<>();
 		int noOfChars = word.length();
@@ -48,9 +39,9 @@ public class Puzzle {
 		LOGGER.debug("Puzzle pattern: " + visiblePattern);
 	}
 
-	public boolean tryLetter(char letter) {
-		if (checkCharacterValid(letter)) {
-			updatePattern(letter);
+	public boolean tryWithCharacter(char character) {
+		if (checkCharacterValid(character)) {
+			updatePattern(character);
 			return true;
 		} else {
 			return false;
@@ -65,30 +56,30 @@ public class Puzzle {
 		return visiblePattern.indexOf(UNDERSCORE) < 0;
 	}
 
-	private void updatePattern(char letter) {
+	private void updatePattern(char character) {
 		StringBuilder wordBuilder = new StringBuilder(word);
 		StringBuilder patternBuilder = new StringBuilder(visiblePattern);
-		int index = wordBuilder.indexOf(String.valueOf(letter));
+		int index = wordBuilder.indexOf(String.valueOf(character));
 		while (!isSolved() && index >= 0) {
 			wordBuilder.setCharAt(index, UNDERSCORE);
-			patternBuilder.setCharAt(index, letter);
-			index = wordBuilder.indexOf(String.valueOf(letter));
+			patternBuilder.setCharAt(index, character);
+			index = wordBuilder.indexOf(String.valueOf(character));
 		}
 		visiblePattern = patternBuilder.toString();
 		LOGGER.debug("Updated puzzle pattern: " + visiblePattern);
 	}
 
-	private boolean checkCharacterValid(char letter) {
+	private boolean checkCharacterValid(char character) {
 		char[] charArray = visiblePattern.toCharArray();
 		for (int i = 0; i < charArray.length; i++) {
-			if (charArray[i] == UNDERSCORE && word.charAt(i) == letter) {
+			if (charArray[i] == UNDERSCORE && word.charAt(i) == character) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public int getHiddenCharCount() {
+	private int getHiddenCharCount() {
 		return word.length() - visibleCharCount;
 	}
 }

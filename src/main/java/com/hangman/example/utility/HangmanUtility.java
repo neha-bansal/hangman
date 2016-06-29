@@ -31,7 +31,7 @@ public class HangmanUtility {
 	 */
 	public static String selectWordFromList() {
 		
-		String selectedWord = hangmanCongiguration.getWordsList().get((int) (Math.random() * 10));
+		String selectedWord = hangmanCongiguration.getWordsList().get((int) (Math.random() * (hangmanCongiguration.getWordsList().size()) - 1));
 		gameAttributes.setSelectedWord(selectedWord);
 		gameAttributes.setSelectedWordLength(selectedWord.length());
 		logger.info("Word selected from the list: " + selectedWord);

@@ -1,12 +1,15 @@
-package com.hangman.demo.domain;
+package com.hangman.example.domain;
 
+/**
+ * This class represents the required attributes for the game at a particular point of time.
+ */
 public class GameAttributes {
 
 	private String selectedWord;
 	private String updatedWord;
 	private int selectedWordLength;
 	private StringBuilder characterUsed = new StringBuilder();
-	private int charactersToHide;
+	private int charactersToHideCount;
 	private int chances = 10;
 	
 	public String getSelectedWord() {
@@ -41,12 +44,12 @@ public class GameAttributes {
 		this.characterUsed = characterUsed;
 	}
 	
-	public int getCharactersToHide() {
-		return charactersToHide;
+	public int getCharactersToHideCount() {
+		return charactersToHideCount;
 	}
 	
-	public void setCharactersToHide(int charactersToHide) {
-		this.charactersToHide = charactersToHide;
+	public void setCharactersToHideCount(int charactersToHideCount) {
+		this.charactersToHideCount = charactersToHideCount;
 	}
 
 	public int getChances() {

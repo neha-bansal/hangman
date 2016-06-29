@@ -1,17 +1,19 @@
-package com.hangman.demo.main;
+package com.hangman.example.main;
 
-import java.io.IOException;
 import java.util.Scanner;
 
-import com.hangman.demo.utility.HangmanUtility;
+import com.hangman.example.utility.HangmanUtility;
 
+/**
+ * Main class to play the game.
+ */
 public class HangmanMain {
 
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) {
 		
 		String selectedWord = HangmanUtility.selectWordFromList();
 		System.out.println(selectedWord);
-		int charactersToHide = HangmanUtility.getCharactersToHide();
+		int charactersToHide = HangmanUtility.getCharactersToHideCount();
 		System.out.println(charactersToHide);
 		String updatedWord = HangmanUtility.hideCharacters();
 		System.out.println(updatedWord);

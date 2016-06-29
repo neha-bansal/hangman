@@ -1,10 +1,18 @@
-package com.hangman.demo.config;
+package com.hangman.example.config;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+
+/**
+ * This class is used for the basic configuration required for the game.
+ *
+ */
 public class HangmanConfiguration {
 	
+	private static Logger logger = Logger.getLogger(HangmanConfiguration.class);
 	private List<String> wordsList = new ArrayList<>();
 	
 	public HangmanConfiguration() {
@@ -18,6 +26,8 @@ public class HangmanConfiguration {
 		wordsList.add("hangman");
 		wordsList.add("gliders");
 		wordsList.add("scientific");
+		logger.info("Game configuration is completed.");
+		logger.info("Size of the words' list: " + wordsList.size()); 
 	}
 	
 	public List<String> getWordsList() {

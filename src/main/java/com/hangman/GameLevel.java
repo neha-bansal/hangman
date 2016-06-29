@@ -9,12 +9,27 @@ public enum GameLevel {
 	private int visibleCharCount;
 	private int wrongGuessAllowed;
 
-	private GameLevel(int minCharCount, int maxCharCount, int visibleCharCount,
-			int wrongGuessAllowed) {
+	private GameLevel(int minCharCount, int maxCharCount, int visibleCharCount, int wrongGuessAllowed) {
 		this.minCharCount = minCharCount;
 		this.maxCharCount = maxCharCount;
 		this.visibleCharCount = visibleCharCount;
 		this.wrongGuessAllowed = wrongGuessAllowed;
+	}
+
+	public int getMinCharCount() {
+		return minCharCount;
+	}
+
+	public int getMaxCharCount() {
+		return maxCharCount;
+	}
+
+	public int getVisibleCharCount() {
+		return visibleCharCount;
+	}
+
+	public int getWrongGuessAllowed() {
+		return wrongGuessAllowed;
 	}
 
 }

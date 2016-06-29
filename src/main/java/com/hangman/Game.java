@@ -32,16 +32,19 @@ public class Game {
 		word = WordRepository.getInstance().guessWord(gameLevel);
 		remainingChances = gameLevel.getWrongGuessAllowed() + getHiddenCharCount();
 		hideCharacters();
-		while (isPatternCompleted() && remainingChances != 0) {
-			displayConsole.display(enteredCharacters, pattern, remainingChances);
+		while (isPatternCompleted() && remainingChances <= 0) {
+			displayConsole.displayInfo(enteredCharacters, pattern, remainingChances);
 			char userEnteredCharacter = displayConsole.scanCharacter();
+			remainingChances--;
 			// printBorder();
-
-			boolean characterExist = HangmanUtility.checkCharacterValid(userEnteredCharacter);
-
 			if (checkCharacterValid(userEnteredCharacter)) {
-				pattern = HangmanUtility.updateWord(userEnteredCharacter);
+				updatePattern(userEnteredCharacter);
 			}
+		}
+		if (isPatternCompleted()) {
+			displayConsole.displayWinningMessage(word);
+		} else {
+			displayConsole.displayLossingMessage(word);
 		}
 	}
 

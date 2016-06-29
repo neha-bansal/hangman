@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 public class DisplayConsole {
 	private static final Logger LOGGER = Logger.getLogger(DisplayConsole.class);
 
-	public void display(List<Character> guessedChars, String pattern, int chancesLeft) {
+	public void displayInfo(List<Character> guessedChars, String pattern, int chancesLeft) {
 		printBorder();
 		printGameInformation(pattern, chancesLeft, guessedChars);
 	}
@@ -32,14 +32,14 @@ public class DisplayConsole {
 		System.out.println();
 	}
 
-	private void printWinningMessage(String answer) {
+	public void displayWinningMessage(String answer) {
 		printStarBorder();
 		System.out.println("HURRAY!!! YOU WON THE GAME :)");
 		System.out.println("The word is : " + answer);
 		printStarBorder();
 	}
 
-	private void printLossingMessage(String answer) {
+	public void displayLossingMessage(String answer) {
 		printStarBorder();
 		System.out.println("SORRY YOU LOST THE GAME :(");
 		System.out.println("The word is : " + answer);

@@ -17,7 +17,7 @@ public class Game {
 	private String pattern;
 	private DisplayConsole displayConsole;
 	private int remainingChances;
-	private WordRepository wordRep = new WordRepository();
+	private WordRepository wordRep = WordRepository.getInstance();
 	private List<Character> enteredCharacters = new ArrayList<Character>();
 
 	private static final Logger LOGGER = Logger.getLogger(Game.class);

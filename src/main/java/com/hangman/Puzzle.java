@@ -19,29 +19,31 @@ public class Puzzle {
 		this.visibleCharCount = visibleCharCount;
 	}
 
-	public String prepare() {
+	public void prepare() {
 		hideCharacters();
-		return visiblePattern;
 	}
 
+	/**
+	 * Hides the characters in the selected word depending on the value of
+	 * characterToHide.
+	 * 
+	 */
 	public void hideCharacters() {
 		Random random = new Random();
 		Set<Integer> positionsToHideSet = new HashSet<>();
-		for (int i = 0; i < getHiddenCharCount(); i++) {
+		while (positionsToHideSet.size() < getHiddenCharCount()) {
 			positionsToHideSet.add(random.nextInt(word.length()));
 		}
 		LOGGER.debug("Positions to hide in the selected word: "
 				+ positionsToHideSet);
 		Iterator<Integer> iterator = positionsToHideSet.iterator();
 		StringBuilder updatedWordBuilder = new StringBuilder(word);
-
 		while (iterator.hasNext()) {
-			int characterPlace = iterator.next();
-			updatedWordBuilder.setCharAt(characterPlace, UNDERSCORE);
+			int charIndexToHide = iterator.next();
+			updatedWordBuilder.setCharAt(charIndexToHide, UNDERSCORE);
 		}
 		visiblePattern = updatedWordBuilder.toString();
-		LOGGER.debug("Updated word after hiding the characters: "
-				+ visiblePattern);
+		LOGGER.debug("Puzzle pattern: " + visiblePattern);
 	}
 
 	public void tryLetter(char letter) {
@@ -50,25 +52,28 @@ public class Puzzle {
 		}
 	}
 
-	public void updatePattern(char letter) {
-		StringBuilder w = new StringBuilder(word);
-		StringBuilder p = new StringBuilder(visiblePattern);
-		int index = w.indexOf(String.valueOf(letter));
-		while (!isCompleted() && index >= 0) {
-			w.setCharAt(index, UNDERSCORE);
-			p.setCharAt(index, letter);
-			index = w.indexOf(String.valueOf(letter));
-		}
-		visiblePattern = p.toString();
-		LOGGER.debug("Updated word after hiding the characters: "
-				+ visiblePattern);
+	public String getVisiblePattern() {
+		return visiblePattern;
 	}
 
-	public boolean isCompleted() {
+	public boolean isSolved() {
 		return visiblePattern.indexOf(UNDERSCORE) < 0;
 	}
 
-	public boolean checkCharacterValid(char letter) {
+	private void updatePattern(char letter) {
+		StringBuilder wordBuilder = new StringBuilder(word);
+		StringBuilder patternBuilder = new StringBuilder(visiblePattern);
+		int index = wordBuilder.indexOf(String.valueOf(letter));
+		while (!isSolved() && index >= 0) {
+			wordBuilder.setCharAt(index, UNDERSCORE);
+			patternBuilder.setCharAt(index, letter);
+			index = wordBuilder.indexOf(String.valueOf(letter));
+		}
+		visiblePattern = patternBuilder.toString();
+		LOGGER.debug("Updated puzzle pattern: " + visiblePattern);
+	}
+
+	private boolean checkCharacterValid(char letter) {
 		return word.indexOf(letter) >= 0;
 	}
 

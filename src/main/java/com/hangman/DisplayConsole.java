@@ -58,10 +58,8 @@ public class DisplayConsole {
 	private void printGameInformation(String pattern, int remainingChances,
 			List<Character> guessedChars) {
 		System.out.print("Chances remaining: " + remainingChances + ", ");
-		System.out.println("Characters used: " + guessedChars);
-		System.out.println();
-		System.out.println("Guess the word:  " + pattern);
-		System.out.println();
+		System.out.println("Characters used: " + guessedChars + "\n");
+		System.out.println("Guess the word:  " + pattern + "\n");
 		System.out.print("Enter a character: ");
 	}
 }

@@ -30,14 +30,10 @@ public class DisplayConsole {
 	/**
 	 * Display the information about the current game state.
 	 * 
-	 * @param gameLevel
-	 *            Game level
-	 * @param guessedChars
-	 *            characters already guessed by user
-	 * @param pattern
-	 *            word with hidden characters
-	 * @param chancesLeft
-	 *            the remaining chances
+	 * @param gameLevel Game level
+	 * @param guessedChars characters already guessed by user
+	 * @param pattern word with hidden characters
+	 * @param chancesLeft the remaining chances
 	 */
 	public void displayGameInfo(GameLevel level, List<Character> guessedChars, String pattern, int chancesLeft) {
 		System.out.println("======================================================================");
@@ -72,8 +68,7 @@ public class DisplayConsole {
 	/**
 	 * Displays the winning message
 	 * 
-	 * @param answer
-	 *            the guessed word
+	 * @param answer the guessed word
 	 */
 	public void displayWinningMessage(String answer) {
 		printStarBorder();
@@ -86,8 +81,7 @@ public class DisplayConsole {
 	/**
 	 * Displays the winning message
 	 * 
-	 * @param answer
-	 *            the guessed word
+	 * @param answer the guessed word
 	 */
 	public void displayLosingMessage(String answer) {
 		printStarBorder();

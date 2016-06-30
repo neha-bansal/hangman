@@ -11,6 +11,10 @@ import org.apache.log4j.Logger;
 import com.hangman.GameLevel;
 import com.hangman.exception.NoWordFoundException;
 
+/**
+ * Acts as a repository of predefined list of words.
+ *
+ */
 public class WordRepository {
 
 	private static final Logger LOGGER = Logger.getLogger(WordRepository.class);
@@ -23,6 +27,14 @@ public class WordRepository {
 	private static final WordRepository INSTANCE = new WordRepository();
 
 	private WordRepository() {
+		initialize();
+	}
+	
+	/**
+	 * Initializes the words map as per the words length.
+	 */
+	private void initialize() {
+		
 		for (String word : wordsList) {
 			Integer wordLength = word.length();
 			if (!wordsMap.containsKey(wordLength)) {
@@ -34,9 +46,13 @@ public class WordRepository {
 				list.add(word);
 			}
 		}
-		LOGGER.info(wordsMap);
 	}
 
+	/**
+	 * Finds out a word from the words list depending on the game level.
+	 * @param level the game level to be used
+	 * @return the guessed word
+	 */
 	public String guessWord(GameLevel level) {
 		int lengthOfWordsToSelect = guessNumber(level.getMinCharCount(), level.getMaxCharCount());
 		LOGGER.info("Finding word with length: " + lengthOfWordsToSelect);
@@ -49,10 +65,20 @@ public class WordRepository {
 		return guessedWord;
 	}
 
+	/**
+	 * Returns the singleton instance of the words repository
+	 * @return the words repository instance
+	 */
 	public static WordRepository getInstance() {
 		return INSTANCE;
 	}
 
+	/**
+	 * return the guessed number
+	 * @param min minimum number
+	 * @param max maximum number
+	 * @return the guessed number
+	 */
 	int guessNumber(int min, int max) {
 		return (int) (Math.random() * ((max - min) + 1) + min);
 	}

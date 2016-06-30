@@ -7,6 +7,10 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Handles the responsibility of initializing and manipulating the pattern with hidden characters.
+ *
+ */
 public class Puzzle {
 	public static final char UNDERSCORE = '_';
 	private static final Logger LOGGER = Logger.getLogger(Puzzle.class);
@@ -19,6 +23,11 @@ public class Puzzle {
 		this.visibleCharCount = visibleCharCount;
 	}
 
+	/**
+	 * Initialize the pattern with hidden characters using the actual guessed word.
+	 * It firstly finds out the positions to hide and then creates a new pattern 
+	 * with characters hidden at those positions.
+	 */
 	public void initializePattern() {
 		Random random = new Random();
 		Set<Integer> positionsToHideSet = new HashSet<>();
@@ -39,6 +48,11 @@ public class Puzzle {
 		LOGGER.debug("Puzzle pattern: " + visiblePattern);
 	}
 
+	/**
+	 * Try the puzzle with user entered character to check if it is valid or not.
+	 * @param character the user entered character
+	 * @return whether character is valid or not
+	 */
 	public boolean tryWithCharacter(char character) {
 		if (checkCharacterValid(character)) {
 			updatePattern(character);
@@ -48,14 +62,26 @@ public class Puzzle {
 		}
 	}
 
+	/**
+	 * Returns the pattern
+	 * @return the pattern
+	 */
 	public String getVisiblePattern() {
 		return visiblePattern;
 	}
 
+	/**
+	 * Checks whether the puzzle is solved or not
+	 * @return whether the puzzle is solved or not
+	 */
 	public boolean isSolved() {
 		return visiblePattern.indexOf(UNDERSCORE) < 0;
 	}
 
+	/**
+	 * Updates the pattern if the user entered character is valid.
+	 * @param character the user entered character
+	 */
 	private void updatePattern(char character) {
 		StringBuilder wordBuilder = new StringBuilder(word);
 		StringBuilder patternBuilder = new StringBuilder(visiblePattern);
@@ -69,6 +95,11 @@ public class Puzzle {
 		LOGGER.debug("Updated puzzle pattern: " + visiblePattern);
 	}
 
+	/**
+	 * Checks whether the user entered character is valid or not.
+	 * @param character the user entered character
+	 * @return whether the user entered character is valid or not
+	 */
 	private boolean checkCharacterValid(char character) {
 		char[] charArray = visiblePattern.toCharArray();
 		for (int i = 0; i < charArray.length; i++) {

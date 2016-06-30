@@ -13,5 +13,8 @@ public class HangmanDemo {
 	public static void main(String[] args) {
 		Game game = new Game(new DisplayConsole(), GameLevel.MEDIUM);
 		game.start();
+		game.progress();
+		game.completed();
+		game.stop();
 	}
 }
